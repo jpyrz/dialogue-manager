@@ -1,0 +1,12 @@
+# Ignore the source files
+src/
+
+# Ignore the TypeScript configuration files
+tsconfig.json
+tsconfig.build.json
+
+# Ignore other unnecessary files
+.gitignore
+.vscode/
+.idea/
+node_modules/
