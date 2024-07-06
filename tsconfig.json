@@ -9,7 +9,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "declaration": true,
-    "lib": ["es2015", "dom"] // Add this line
+    "lib": ["es2015", "dom"]
   },
   "include": ["src/**/*"]
 }

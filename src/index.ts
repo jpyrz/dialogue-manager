@@ -1,3 +1,3 @@
 export * from "./types";
-export * from "./../src/hooks/useDialogueManager";
-export * from "./../src/hooks/useDialogueProgress";
+export * from "./hooks/useDialogueManager";
+export * from "./hooks/useDialogueProgress";
