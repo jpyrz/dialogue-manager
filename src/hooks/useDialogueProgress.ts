@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import React from "react";
 import { StoryNode } from "../types";
 
 export const useDialogueProgress = (
@@ -12,9 +12,9 @@ export const useDialogueProgress = (
   selectedChoiceIndex: number = 0,
   triggerKey: string = "Space"
 ) => {
-  const progress = useCallback(() => {
+  const progress = React.useCallback(() => {
     const currentNode = getCurrentNode();
-    if (currentNode.type === "dialogue") {
+    if (currentNode.type === "dialogue" && currentNode.nextNode) {
       progressToNextNode(currentNode.nextNode!);
     } else if (
       currentNode.type === "decision" &&
@@ -22,12 +22,14 @@ export const useDialogueProgress = (
       currentNode.choices.length > 0
     ) {
       const choice = currentNode.choices[selectedChoiceIndex];
-      progressToNextNode(choice.nextNode, choice.relationshipEffects);
+      if (choice && choice.nextNode) {
+        progressToNextNode(choice.nextNode, choice.relationshipEffects);
+      }
     }
     onNodeChange(getCurrentNode());
   }, [getCurrentNode, progressToNextNode, onNodeChange, selectedChoiceIndex]);
 
-  const handleKeyPress = useCallback(
+  const handleKeyPress = React.useCallback(
     (event: KeyboardEvent) => {
       if (event.code === triggerKey) {
         progress();
@@ -36,7 +38,7 @@ export const useDialogueProgress = (
     [progress, triggerKey]
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     window.addEventListener("keydown", handleKeyPress);
     return () => {
       window.removeEventListener("keydown", handleKeyPress);

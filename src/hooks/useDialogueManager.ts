@@ -1,12 +1,12 @@
-import { useState } from "react";
+import React from "react";
 import { Character, Story, StoryNode } from "../types";
 
 export const useDialogueManager = (
   initialStory: Story,
   startNodeId: string
 ) => {
-  const [story, setStory] = useState(initialStory);
-  const [currentNodeId, setCurrentNodeId] = useState(startNodeId);
+  const [story, setStory] = React.useState(initialStory);
+  const [currentNodeId, setCurrentNodeId] = React.useState(startNodeId);
 
   const getCurrentNode = (): StoryNode => {
     const node = story.nodes.find((n) => n.id === currentNodeId);
@@ -21,6 +21,8 @@ export const useDialogueManager = (
     relationshipEffects?: { [characterId: string]: number },
     poseChanges?: { [characterId: string]: string }
   ) => {
+    if (!nextNodeId) return;
+
     setCurrentNodeId(nextNodeId);
     setStory((prevStory) => {
       let updatedCharacters = prevStory.characters;
