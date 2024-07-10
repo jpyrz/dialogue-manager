@@ -12,30 +12,28 @@ export const useDialogueProgress = (
   selectedChoiceIndex: number = 0,
   triggerKey: string = "Space"
 ) => {
+  const progress = useCallback(() => {
+    const currentNode = getCurrentNode();
+    if (currentNode.type === "dialogue") {
+      progressToNextNode(currentNode.nextNode!);
+    } else if (
+      currentNode.type === "decision" &&
+      currentNode.choices &&
+      currentNode.choices.length > 0
+    ) {
+      const choice = currentNode.choices[selectedChoiceIndex];
+      progressToNextNode(choice.nextNode, choice.relationshipEffects);
+    }
+    onNodeChange(getCurrentNode());
+  }, [getCurrentNode, progressToNextNode, onNodeChange, selectedChoiceIndex]);
+
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
       if (event.code === triggerKey) {
-        const currentNode = getCurrentNode();
-        if (currentNode.type === "dialogue") {
-          progressToNextNode(currentNode.nextNode!);
-        } else if (
-          currentNode.type === "decision" &&
-          currentNode.choices &&
-          currentNode.choices.length > 0
-        ) {
-          const choice = currentNode.choices[selectedChoiceIndex];
-          progressToNextNode(choice.nextNode, choice.relationshipEffects);
-        }
-        onNodeChange(getCurrentNode());
+        progress();
       }
     },
-    [
-      getCurrentNode,
-      progressToNextNode,
-      onNodeChange,
-      selectedChoiceIndex,
-      triggerKey,
-    ]
+    [progress, triggerKey]
   );
 
   useEffect(() => {
@@ -44,4 +42,6 @@ export const useDialogueProgress = (
       window.removeEventListener("keydown", handleKeyPress);
     };
   }, [handleKeyPress]);
+
+  return { progress };
 };
