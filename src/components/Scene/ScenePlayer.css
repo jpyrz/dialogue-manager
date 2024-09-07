@@ -1,0 +1,140 @@
+.scene-player {
+  transition: background-image 1s ease-in-out;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  animation: backgroundFadeIn 1s forwards;
+}
+
+body {
+  font-family: 'Arial', sans-serif; /* Set a default font family */
+}
+
+.character-image {
+  position: absolute;
+  bottom: 0;
+  max-height: 80%;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeIn 1s forwards, sway 5s infinite ease-in-out;
+}
+
+.character-image.left {
+  left: 0;
+  transform: none;
+}
+
+.character-image.center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.character-image.right {
+  right: 0;
+  transform: none;
+}
+
+.dialogue-box {
+  position: absolute;
+  bottom: 5%; /* Ensure it's positioned 5% from the bottom */
+  left: 50%; /* Move to the middle of the screen */
+  transform: translateX(-50%); /* Center the element */
+  width: 70%;
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  color: #333333; /* Dark grey font color */
+  padding: 20px;
+  z-index: 2;
+  font-size: 1.2em; /* Increase text size */
+  border: 3px solid white; /* Solid white border */
+  border-radius: 20px; /* Rounded corners */
+  box-sizing: border-box; /* Ensure padding and border are included in the width */
+}
+
+.dialogue-content {
+  margin-bottom: 10px;
+}
+
+.character-name {
+  font-weight: bold;
+}
+
+.character-dialogue {
+  margin-top: 5px;
+  font-family: inherit; /* Inherit font family from body */
+}
+
+.continue-indicator {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 1.2em;
+  color: #333333; /* Blue color for the indicator */
+  animation: blink 1s infinite; /* Blinking animation */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.choice-button {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: white; /* Set background color to white */
+  color: #007bff; /* Set text color */
+  border: 3px solid #007bff; /* Thicker border */
+  border-radius: 20px; /* Rounded corners */
+  cursor: pointer;
+  width: 100%; /* 100% width for choice buttons */
+  transition: transform 0.2s ease-in-out; /* Smooth transition for hover effect */
+  font-size: 1.2em; /* Increase text size */
+  font-family: inherit;
+}
+
+.next-button:hover, .choice-button:hover {
+  transform: scale(1.05); /* Grow a bit on hover */
+  background-color: #007bff;
+  color: white;
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align the buttons */
+  justify-content: center; /* Center align the buttons vertically */
+  position: absolute; /* Position absolutely within the parent */
+  top: 50%; /* Move to the middle of the screen */
+  left: 50%; /* Move to the middle of the screen */
+  transform: translate(-50%, -50%); /* Center the element */
+  z-index: 2;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sway {
+  0%, 100% {
+    transform: translateX(-50%) translateX(-5px);
+  }
+  50% {
+    transform: translateX(-50%) translateX(5px);
+  }
+}
+
+@keyframes backgroundFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,12 +1,16 @@
-export type StoryNode = {
+export type SceneNode = {
   id: string;
   type: "dialogue" | "decision";
-  content?: { character: string; text: string }[];
-  text?: string;
+  background?: string;
+  content?: {
+    character: string;
+    text: string;
+    pose: string;
+    position: "left" | "right" | "center";
+  }[];
   choices?: {
     text: string;
     nextNode: string;
-    relationshipEffects?: { [characterId: string]: number };
   }[];
   nextNode?: string;
 };
@@ -16,10 +20,9 @@ export type Character = {
   name: string;
   relationshipPoints: number;
   thresholds: { friendship: number; romance: number; marriage: number };
-  currentPose?: string;
 };
 
-export type Story = {
-  nodes: StoryNode[];
-  characters: Character[];
+export type Scene = {
+  nodes: SceneNode[];
+  initialBackground: string;
 };

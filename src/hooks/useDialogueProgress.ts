@@ -1,14 +1,10 @@
 import React from "react";
-import { StoryNode } from "../types";
+import { SceneNode } from "../types";
 
 export const useDialogueProgress = (
-  getCurrentNode: () => StoryNode,
-  progressToNextNode: (
-    nextNodeId: string,
-    relationshipEffects?: { [characterId: string]: number },
-    poseChanges?: { [characterId: string]: string }
-  ) => void,
-  onNodeChange: (node: StoryNode) => void,
+  getCurrentNode: () => SceneNode,
+  progressToNextNode: (nextNodeId: string) => void,
+  onNodeChange: (node: SceneNode) => void,
   selectedChoiceIndex: number = 0,
   triggerKey: string = "Space"
 ) => {
@@ -23,7 +19,7 @@ export const useDialogueProgress = (
     ) {
       const choice = currentNode.choices[selectedChoiceIndex];
       if (choice && choice.nextNode) {
-        progressToNextNode(choice.nextNode, choice.relationshipEffects);
+        progressToNextNode(choice.nextNode);
       }
     }
     onNodeChange(getCurrentNode());
